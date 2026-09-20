@@ -131,6 +131,36 @@ const sitemapUrls = []
   }))
 }
 
+// ---------------- app routes (account, checkout, order) ----------------
+// These screens are personal, not catalogue: they render from localStorage
+// after hydration, so there is nothing for a crawler to index. They are
+// still prerendered — one static HTML file each — because Vercel serves
+// files, not routes, and without them a direct hit on /checkout or a
+// refresh mid-flow would 404. Each ships the app's signed-out/loading
+// shell, which is exactly what the client renders on its first pass, so
+// hydration matches.
+const APP_ROUTES = [
+  ['/login', 'Log in — NeoFlorist', 'Log in to your NeoFlorist account.'],
+  ['/checkout', 'Checkout — NeoFlorist', 'Enter delivery and billing details and choose how to pay.'],
+  ['/checkout/payment', 'Payment — NeoFlorist demo', 'Simulated payment screen. No payment provider is contacted.'],
+  ['/order', 'Your order — NeoFlorist', 'Your NeoFlorist order confirmation.'],
+  ['/account', 'Your account — NeoFlorist', 'Your NeoFlorist account.'],
+  ['/account/addresses', 'Saved addresses — NeoFlorist', 'Manage your saved delivery addresses.'],
+  ['/account/payments', 'Payment methods — NeoFlorist', 'Manage your saved payment methods.'],
+  ['/account/reminders', 'Reminders — NeoFlorist', 'Birthday and anniversary reminders.'],
+  ['/account/orders', 'Your orders — NeoFlorist', 'Your NeoFlorist order history.'],
+]
+
+for (const [urlPath, title, description] of APP_ROUTES) {
+  write(urlPath, pageShell({
+    urlPath,
+    html: render(urlPath),
+    title,
+    description,
+    robots: 'noindex, nofollow',
+  }))
+}
+
 // ---------------- categories ----------------
 for (const cat of CATEGORIES) {
   const urlPath = `/category/${cat.slug}`
@@ -228,4 +258,8 @@ ${sitemapUrls.map((u) => `  <url>\n    <loc>${u.loc}</loc>\n    <lastmod>${today
 fs.writeFileSync(path.join(dist, 'sitemap.xml'), sitemap)
 fs.writeFileSync(path.join(dist, 'robots.txt'), `User-agent: *\nAllow: /\n\nSitemap: ${SITE_URL}/sitemap.xml\n`)
 
-console.log(`prerender: wrote ${sitemapUrls.length + 2} pages (home, about, ${CATEGORIES.length} categories, ${PRODUCTS.length} products, search, 404) + sitemap + robots`)
+console.log(
+  `prerender: wrote ${sitemapUrls.length + 2 + APP_ROUTES.length} pages ` +
+  `(home, about, ${CATEGORIES.length} categories, ${PRODUCTS.length} products, search, 404, ` +
+  `${APP_ROUTES.length} app routes) + sitemap + robots`
+)

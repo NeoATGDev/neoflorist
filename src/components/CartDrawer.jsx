@@ -1,10 +1,19 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useCart } from '../context/CartContext.jsx'
+import FlowerArt from './FlowerArt.jsx'
 import { XIcon } from './Icons.jsx'
+import { inr } from '../lib/pricing.js'
 
 export default function CartDrawer({ open, onClose }) {
-  const { items, removeItem, total } = useCart()
+  const { items, removeItem, setQuantity, total } = useCart()
+  const navigate = useNavigate()
   if (!open) return null
+
+  function checkout() {
+    onClose()
+    navigate('/checkout')
+  }
 
   return (
     <>
@@ -22,12 +31,22 @@ export default function CartDrawer({ open, onClose }) {
           ) : (
             items.map((it) => (
               <div className="cart-row" key={it.sku}>
+                <span className="stage" aria-hidden="true">
+                  <FlowerArt art={it.art} label={it.name} />
+                </span>
                 <div className="meta">
                   <b>{it.name}</b>
-                  <span>{it.size} · qty {it.quantity}</span>
+                  <span>{it.sizeLabel || it.size}</span>
+                  <div className="qty-mini">
+                    <button onClick={() => setQuantity(it.sku, it.quantity - 1)} aria-label={`Fewer ${it.name}`}>−</button>
+                    <output className="num">{it.quantity}</output>
+                    <button onClick={() => setQuantity(it.sku, it.quantity + 1)} aria-label={`More ${it.name}`}>+</button>
+                  </div>
                 </div>
-                <div className="price num">₹{it.lineTotal.toLocaleString('en-IN')}</div>
-                <button className="remove" onClick={() => removeItem(it.sku)}>Remove</button>
+                <div className="cart-row-end">
+                  <div className="price num">{inr(it.lineTotal)}</div>
+                  <button className="remove" onClick={() => removeItem(it.sku)}>Remove</button>
+                </div>
               </div>
             ))
           )}
@@ -36,13 +55,11 @@ export default function CartDrawer({ open, onClose }) {
           <div className="drawer-foot">
             <div className="drawer-total">
               <span>Subtotal</span>
-              <span className="num">₹{total.toLocaleString('en-IN')}</span>
+              <span className="num">{inr(total)}</span>
             </div>
-            <button className="btn btn--primary btn--block" onClick={() => {
-              console.log('%c[NeoFlorist] Checkout is not wired yet — Phase 2 backend will handle this.', 'color:#C6415B;font-weight:600')
-              onClose()
-            }}>
-              Checkout (demo)
+            <p className="hint" style={{ marginBottom: 12 }}>Delivery and taxes are calculated at checkout.</p>
+            <button className="btn btn--primary btn--block" onClick={checkout}>
+              Checkout
             </button>
           </div>
         )}

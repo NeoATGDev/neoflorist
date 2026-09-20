@@ -36,6 +36,40 @@ export const MenuIcon = (p) => (
   <svg viewBox="0 0 24 24" {...base} {...p}><path d="M3 6h18M3 12h18M3 18h18" /></svg>
 )
 
+export const UserIcon = (p) => (
+  <svg viewBox="0 0 24 24" {...base} {...p}><circle cx="12" cy="8" r="3.6" /><path d="M4.5 20c0-3.6 3.4-5.6 7.5-5.6s7.5 2 7.5 5.6" /></svg>
+)
+export const BellIcon = (p) => (
+  <svg viewBox="0 0 24 24" {...base} {...p}><path d="M6 9a6 6 0 1 1 12 0c0 4 1.4 5.6 2 6.4H4c.6-.8 2-2.4 2-6.4z" /><path d="M10 19a2 2 0 0 0 4 0" /></svg>
+)
+export const CardIcon = (p) => (
+  <svg viewBox="0 0 24 24" {...base} {...p}><rect x="2.5" y="5" width="19" height="14" rx="2.5" /><path d="M2.5 10h19" /><path d="M6 15h4" /></svg>
+)
+export const BankIcon = (p) => (
+  <svg viewBox="0 0 24 24" {...base} {...p}><path d="M3 9.5L12 4l9 5.5" /><path d="M5 10v8M9.5 10v8M14.5 10v8M19 10v8" /><path d="M3 20.5h18" /></svg>
+)
+export const TrashIcon = (p) => (
+  <svg viewBox="0 0 24 24" {...base} {...p}><path d="M4 6.5h16" /><path d="M9 6.5V4.5h6v2" /><path d="M6 6.5l1 13.5h10l1-13.5" /></svg>
+)
+export const PlusIcon = (p) => (
+  <svg viewBox="0 0 24 24" {...base} {...p}><path d="M12 5v14M5 12h14" /></svg>
+)
+export const PencilIcon = (p) => (
+  <svg viewBox="0 0 24 24" {...base} {...p}><path d="M4 20l4.5-1 9-9-3.5-3.5-9 9z" /><path d="M14 6.5L17.5 10" /></svg>
+)
+export const LockIcon = (p) => (
+  <svg viewBox="0 0 24 24" {...base} {...p}><rect x="4.5" y="10" width="15" height="10" rx="2.4" /><path d="M8 10V7.5a4 4 0 0 1 8 0V10" /></svg>
+)
+export const BoxIcon = (p) => (
+  <svg viewBox="0 0 24 24" {...base} {...p}><path d="M3 7.5L12 3l9 4.5v9L12 21l-9-4.5z" /><path d="M3 7.5L12 12l9-4.5M12 12v9" /></svg>
+)
+export const ArrowLeftIcon = (p) => (
+  <svg viewBox="0 0 24 24" {...base} {...p}><path d="M19 12H5M11 6l-6 6 6 6" /></svg>
+)
+export const LogOutIcon = (p) => (
+  <svg viewBox="0 0 24 24" {...base} {...p}><path d="M14 4h4.5A1.5 1.5 0 0 1 20 5.5v13a1.5 1.5 0 0 1-1.5 1.5H14" /><path d="M9 8l-4 4 4 4M5 12h10" /></svg>
+)
+
 export function Stars({ rating, size = 13 }) {
   return (
     <span className="p-rating" aria-label={`${rating} out of 5 stars`}>

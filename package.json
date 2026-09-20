@@ -3,13 +3,14 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "description": "NeoFlorist \u2014 flower delivery demo/POC (React + Vite)",
+  "description": "NeoFlorist — flower delivery demo/POC (React + Vite)",
   "scripts": {
     "dev": "vite",
     "build": "vite build && vite build --ssr src/entry-server.jsx --outDir dist-ssr && node prerender.mjs",
     "build:client": "vite build",
     "build:preview": "vite build --mode preview",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "serve:dist": "node scripts/serve-dist.mjs 4178"
   },
   "dependencies": {
     "react": "^18.3.1",
